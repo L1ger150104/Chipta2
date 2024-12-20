@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chipta Bron Qilish Tizimi</title>
+  <style>
+     body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .search-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background-color: #0078FF;
+      padding: 15px;
+      border-radius: 8px;
+      color: white;
+    }
+    .search-container select, .search-container input, .search-container button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+    .search-container button {
+      background-color: #FF6A00;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .search-container button:hover {
+      background-color: #E65A00;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Chipta Bron Qilish Tizimi</h1>
+</header>
+
+<div class="container">
+  <!-- Search Section -->
+  <div id="search" class="tab-content active">
+    <div class="search-container">
+      <label for="from">Qayerdan:</label>
+      <select id="from">
+        <option value="Toshkent">Toshkent</option>
+      </select>
+      
+      <label for="to">Qayerga:</label>
+      <select id="to">
+        <option value="Farg'ona">Farg'ona</option>
+        <option value="Andijon">Andijon</option>
+        <option value="Namangan">Namangan</option>
+        <option value="Buxoro">Buxoro</option>
+        <option value="Xorazm">Xorazm</option>
+      </select>
+
+      <input type="text" placeholder="Qachon">
+      <input type="text" placeholder="Qaytish">
+
+      <select id="payment-method">
+        <option value="any">To'lov: </option>
+        <option value="Naqt">Naqt</option>
+        <option value="Karta">Karta</option>
+      </select>
+
+      <select id="transport">
+        <option value="any">Transport: </option>
+        <option value="Poyezd">Poyezd</option>
+        <option value="Samolyot">Samolyot</option>
+      </select>
+
+      <button onclick="switchTab('bron')">Izlash</button>
+    </div>
+  </div>
+
+  <!-- Bron Section -->
+  <div id="bron" class="tab-content">
+    <h2>Chipta Bron Qiling</h2>
+    <form id="ticketForm">
+      <div class="form-group">
+        <label for="userName">Ismingiz:</label>
+        <input type="text" id="userName" placeholder="Ismingizni kiriting" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Elektron pochta:</label>
+        <input type="email" id="email" placeholder="Elektron pochtangizni kiriting" required>
+      </div>
+      <div class="form-group">
+        <label for="route">Chiptalar narxi:</label>
+        <select id="route" required>
+          <option value="">Chiptalar narxi</option>
+          <option value="1">Toshkentdan Farg'onaga 230 ming (samolyot) 120 ming (poyezd)</option>
+          <option value="1">Toshkentdan Andijonga 240 ming (samolyot) 150 ming (poyezd)</option>
+          <option value="1">Toshkentdan Namanganga 220 ming (samolyot) 130 ming (poyezd)</option>
+          <option value="1">Toshkentdan Buxoroga 260 ming (samolyot) 125 ming (poyezd)</option>
+          <option value="1">Toshkentdan Xorazmgaga 220 ming (samolyot) 110 ming (poyezd)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="payment">To'lov usuli:</label>
+        <select id="payment" required>
+          <option value="">To'lov usulini tanlang</option>
+          <option value="card">Karta</option>
+          <option value="paypal">PayPal</option>
+        </select>
+      </div>
+      <button type="submit">Chipta bron qilish</button>
+    </form>
+
+    <h2>Bron qilingan chiptalar</h2>
+    <table id="ticketTable">
+      <thead>
+        <tr>
+          <th>Ism</th>
+          <th>Elektron pochta</th>
+          <th>Yo'nalish</th>
+          <th>To'lov</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Bron qilingan chiptalar bu yerda paydo bo'ladi -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  function switchTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(content => {
+      content.classList.remove('active');
+    });
+    document.querySelector(`#${tabId}`).classList.add('active');
+  }
+
+  document.getElementById('ticketForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const userName = document.getElementById('userName').value;
+    const email = document.getElementById('email').value;
+    const route = document.getElementById('route').value;
+    const payment = document.getElementById('payment').value;
+
+    if (!userName || !email || !route || !payment) {
+      alert("Iltimos, barcha maydonlarni to'ldiring.");
+      return;
+    }
+
+    const ticketTable = document.getElementById('ticketTable').querySelector('tbody');
+    const row = document.createElement('tr');
+    row.innerHTML = 
+      `<td>${userName}</td>
+      <td>${email}</td>
+      <td>${route}</td>
+      <td>${payment === 'card' ? 'Karta' : 'PayPal'}</td>`;
+    ticketTable.appendChild(row);
+
+    document.getElementById('ticketForm').reset();
+    alert('Chipta muvaffaqiyatli bron qilindi!');
+  });
+</script>
+
+</body>
+</html>
